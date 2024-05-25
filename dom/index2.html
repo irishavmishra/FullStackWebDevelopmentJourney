@@ -1,0 +1,27 @@
+<html>
+  <body>
+    <script>
+      const addToDo = function () {
+        const title = document.getElementById("title").value;
+        const discription = document.getElementById("discription").value;
+
+        const container = document.getElementById("container");
+
+        post.console.log(title);
+        console.log(discription);
+      };
+    </script>
+    <div>
+      <input id="title" type="text" placeholder="title" />
+      <input id="discription" type="text" placeholder="Discription" />
+      <button onclick="addToDo()">Add To Do</button>
+      <div id="container">
+        <div>
+          <div>Title of todo 1</div>
+          <div>Discription of todo 1</div>
+          <button>Mast as done</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

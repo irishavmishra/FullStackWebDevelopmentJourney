@@ -1,64 +1,46 @@
 <html>
-  <script>
-    const sum = async function () {
-      const element = document.getElementById("finalSum");
-      const a = document.getElementById("firstNumber").value;
-      const b = document.getElementById("secondNumber").value;
-
-      const data = await fetch(`http://localhost:3000/sum?a=${a}&b=${b}`);
-      const ans = await data.text();
-      //   console.log(ans);
-      // element.innerHTML = parseInt(a) + parseInt(b);
-      element.innerHTML = ans;
-    };
-    //   Intrest calculater
-    const intrestCal = async () => {
-      const intrest = document.getElementById("intrest");
-      const totalAns = document.getElementById("totalAns");
-      const interestAns = document.getElementById("interestAns");
-      const principal = document.getElementById("principal").value;
-      const rate = document.getElementById("rate").value;
-      const time = document.getElementById("time").value;
-      const data = await fetch(
-        `http://localhost:3000/percent?principal=${principal}&rate=${rate}&time=${time}`
-      );
-      const ans = await data.json();
-      intrest.innerHTML = `<div>
-        <span>Total: ${ans.total}</span>
-        <br/>
-        <br/>
-        <span>Interest: ${ans.interest}</span>
-      </div>`;
-      // intrest.innerHTML = await ans;
-      //   console.log(ans);
-    };
-  </script>
   <body>
     <div>
-      <h1>Sum</h1>
-      <input id="firstNumber" type="text" placeholder="First Number" />
+      <input id="title" type="text" placeholder="title" />
       <br />
       <br />
-      <input id="secondNumber" type="text" placeholder="Second Number" />
+      <input id="description" type="text" placeholder="description" />
       <br />
       <br />
-      <button onclick="sum()">Calculate Sum</button>
+      <button onclick="onTodo()">Add Todo</button>
       <br />
       <br />
-      <div id="finalSum"></div>
+      <div id="container"></div>
     </div>
-    <div>
-      <h1>Interest</h1>
-      <input id="principal" type="text" placeholder="Principal" />
-      <input id="rate" type="text" placeholder="Rate" />
-      <input id="time" type="text" placeholder="time" />
-      <br />
-      <br />
-      <button onclick="intrestCal()">Intrest</button>
-      <div id="intrest">
-        <!-- <span id="totalAns"></span>
-        <span id="interestAns"></span> -->
-      </div>
-    </div>
+
+    <script>
+      let globalId = 1;
+      function markAsDone(todoId) {
+        const todo = document.getElementById(todoId);
+        todo.children[2].innerHTML = "Done";
+      }
+
+      function createChild(title, description, id) {
+        const parents = document.createElement("div");
+        const firstChild = document.createElement("div");
+        firstChild.innerHTML = title;
+        const secondChild = document.createElement("div");
+        secondChild.innerHTML = description;
+        const thirdChild = document.createElement("button");
+        thirdChild.innerHTML = "Mark as Done";
+        thirdChild.setAttribute("onclick", `markAsDone(${id})`);
+        parents.appendChild(firstChild);
+        parents.appendChild(secondChild);
+        parents.appendChild(thirdChild);
+        parents.setAttribute("id", id);
+        return parents;
+      }
+      function onTodo() {
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+        const container = document.getElementById("container");
+        container.appendChild(createChild(title, description, globalId++));
+      }
+    </script>
   </body>
 </html>
