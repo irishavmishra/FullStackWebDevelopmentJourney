@@ -14,7 +14,7 @@
     </div>
 
     <script>
-      let globalId = 1;
+      let globalId = Math.floor(Math.random() * 10);
       function markAsDone(todoId) {
         const todo = document.getElementById(todoId);
         todo.children[2].innerHTML = "Done";
@@ -41,6 +41,33 @@
         const container = document.getElementById("container");
         container.appendChild(createChild(title, description, globalId++));
       }
+
+      function updateDomAccToState(state) {
+        const container = document.getElementById("container");
+        document.getElementById("container").innerHTML = "";
+        for (let i = 0; i < state.length; i++) {
+          const parents = createChild(
+            state[i].title,
+            state[i].description,
+            state[i].id
+          );
+          container.appendChild(parents);
+        }
+      }
+
+      // window.setInterval(async function () {
+      //   const res = await fetch("https://sum-server.100xdevs.com/todos");
+      //   const state = await res.json();
+      //   updateDomAccToState(state.todos);
+      // }, 5000);
+
+      const state = async function () {
+        const res = await fetch("https://sum-server.100xdevs.com/todos");
+        const state = await res.json();
+        updateDomAccToState(state.todos);
+      };
+
+      state();
     </script>
   </body>
 </html>
